@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calcoulette</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+
+  <body>
+
+
+      <form>
+    <table>
+      <tr>
+        <td colspan="4"><input type="text"  id="screen"></td>
+      </tr>
+      <tr>
+        <td><button type="button" class="chiffre">1</button></td>
+        <td><button type="button" class="chiffre">2</button></td>
+        <td><button type="button" class="chiffre">3</button></td>
+        <td><button type="button" class="operateur">+</button></td>
+      </tr>
+      <tr>
+        <td><button type="button" class="chiffre">4</button></td>
+        <td><button type="button" class="chiffre">5</button></td>
+        <td><button type="button" class="chiffre">6</button></td>
+        <td><button type="button" class="operateur">-</button></td>
+      </tr>
+      <tr>
+        <td><button type="button" class="chiffre">7</button></td>
+        <td><button type="button" class="chiffre">8</button></td>
+        <td><button type="button" class="chiffre">9</button></td>
+        <td><button type="button" class="operateur">x</button></td>
+      </tr>
+      <tr>
+        <td><button type="button" class="chiffre">0</button></td>
+        <td><button type="button" class="symbol">(</button></td>
+        <td><button type="button" class="symbol">)</button></td>
+        <td><button type="button" class="operateur">÷</button></td>
+      </tr>
+      <tr>
+        <td><button type="button" class="symbol">←</button></td>
+        <td><button type="button" class="symbol">.</button></td>
+        <td><button class="symbol" type="reset">C</button></td>
+        <td><button type="button" class="symbol">=</button></td>
+      </tr>
+    </table>
+    </form>
+	
+
+  <script>
+     // jshint browser:true, devel:true
+
+function button_click(evt) {
+  var input = document.getElementsByTagName("input")[0];
+  var key = evt.target.textContent;
+  // var key = evt.target.value; // with input type button usage
+  if (key === "*" || key === "x") {
+      key = "*";
+  } else if (key === "/" || key === '÷') {
+      key = "/";
+  } else if (key === "←" || key === "&lt;-") {
+      key = "<-";
+  }
+
+  if (key === "<-") {
+      input.value = input.value.substr(0, input.value.length-1);
+      if (input.value === "") {
+          input.value = "0";
+      }
+  } else if (key === "=") {
+      try {
+          input.value = eval(input.value);
+      }
+      catch (ex) {
+          input.value = "err";
+      }
+  } else {
+      if (input.value === "0" || input.value === "err") {
+          input.value = "";
+      }
+      input.value += key;
+  }
+}
+
+window.addEventListener("load", function(evt) {
+  // Pour une utilisation avec des <buttons>
+  var buttons = document.getElementsByTagName("button");
+  // Pour une utilisation avec des <input>
+// var buttons = document.getElementsByTagName("input");
+  for(var i=0; i<buttons.length; i+=1) {
+      buttons[i].addEventListener("click", button_click);
+  }
+});
+
+console.log("calculette.js loaded");
+
+   </script>
+
+  </body>
+</html>
